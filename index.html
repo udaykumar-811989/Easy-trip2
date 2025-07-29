@@ -3,93 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EasyTrip</title>
+  <title>EasyTrip – Book Your Journey</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7f8fa;
+      background: #f9f9f9;
       margin: 0;
       padding: 0;
     }
+
     header {
       background: #007bff;
       color: white;
       padding: 1rem;
       text-align: center;
     }
+
     .container {
-      max-width: 480px;
+      max-width: 400px;
       margin: 2rem auto;
       background: white;
       padding: 1.5rem;
+      border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
     }
+
     input, select, button {
       width: 100%;
-      padding: 0.75rem;
-      margin-top: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 0.8rem;
+      margin: 1rem 0;
       font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
+
     button {
       background: #007bff;
       color: white;
       border: none;
       cursor: pointer;
     }
+
     button:hover {
       background: #0056b3;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>EasyTrip</h1>
-    <p>Book Flights, Trains & Buses — Earn on Every Booking</p>
+    <p>Book Flights, Trains & Buses</p>
   </header>
 
   <div class="container">
-    <form id="searchForm">
-      <label for="from">From:</label>
-      <input type="text" id="from" placeholder="e.g. Bangalore" required />
-      
-      <label for="to">To:</label>
-      <input type="text" id="to" placeholder="e.g. Delhi" required />
-      
-      <label for="type">Type:</label>
-      <select id="type" required>
-        <option value="flight">Flight</option>
-        <option value="train">Train</option>
-        <option value="bus">Bus</option>
-      </select>
-      
-      <button type="submit">Search Now</button>
-    </form>
+    <label for="from">From:</label>
+    <input type="text" id="from" placeholder="e.g. Delhi" required />
+
+    <label for="to">To:</label>
+    <input type="text" id="to" placeholder="e.g. Mumbai" required />
+
+    <label for="type">Select Travel Type:</label>
+    <select id="type">
+      <option value="flight">Flight</option>
+      <option value="train">Train</option>
+      <option value="bus">Bus</option>
+    </select>
+
+    <button onclick="bookNow()">Search & Book</button>
   </div>
 
   <script>
-    document.getElementById('searchForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const from = document.getElementById('from').value.trim();
-      const to = document.getElementById('to').value.trim();
+    function bookNow() {
+      const from = document.getElementById('from').value.trim().toLowerCase().replace(/\s+/g, '-');
+      const to = document.getElementById('to').value.trim().toLowerCase().replace(/\s+/g, '-');
       const type = document.getElementById('type').value;
 
       let url = '';
 
       if (type === 'flight') {
-        url = `https://www.booking.com/flights/index.html?aid=YOUR_MARKER_ID&origin=${from}&destination=${to}`;
+        // Replace with your actual affiliate URL
+        url = `https://www.aviasales.com/search/${from}${to}1?marker=657867`;
       } else if (type === 'train') {
-        url = `https://www.goibibo.com/trains/?utm_source=affiliate&utm_medium=widget&utm_campaign=YOUR_MARKER_ID`;
+        url = `https://www.confirmtkt.com/train-between-stations/${from}/${to}`;
       } else if (type === 'bus') {
-        url = `https://www.redbus.in/?affcode=657867`;
+        url = `https://www.redbus.in/bus-tickets/${from}-to-${to}`;
       }
 
       if (url) {
         window.open(url, '_blank');
+      } else {
+        alert("Something went wrong. Please enter valid places.");
       }
-    });
+    }
   </script>
+
 </body>
 </html>
