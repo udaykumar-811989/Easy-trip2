@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyTrip</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EasyTrip</h1>
+    <p>Book Flights, Trains & Buses — Earn on Every Booking</p>
+  </header>
+  <div class="container">
+    <form id="searchForm">
+      <label for="from">From:</label>
+      <input type="text" id="from" name="from" placeholder="e.g. Bangalore" required>
+      
+      <label for="to">To:</label>
+      <input type="text" id="to" name="to" placeholder="e.g. Delhi" required>
+      
+      <label for="type">Type:</label>
+      <select id="type" name="type">
+        <option value="flight">Flight</option>
+        <option value="train">Train</option>
+        <option value="bus">Bus</option>
+      </select>
+      
+      <button type="submit">Search Now</button>
+    </form>
+
+    <iframe id="resultsFrame" src=""></iframe>
+  </div>
+
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const type = document.getElementById("type").value;
+      const iframe = document.getElementById("resultsFrame");
+
+      if (type === "flight") {
+        iframe.src = `https://www.aviasales.com/search?marker=657867&origin_iata=${from}&destination_iata=${to}`;
+      } else if (type === "train") {
+        iframe.src = `https://www.irctc.co.in/`;
+      } else if (type === "bus") {
+        iframe.src = `https://www.redbus.in/`;
+      }
+    });
+  </script>
+</body>
+</html>
