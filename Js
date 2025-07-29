@@ -1,0 +1,52 @@
+// server.js (Backend)
+const express = require('express');
+const axios = require('axios');
+const cors = require('cors');
+const app = express();
+const port = 3000;
+
+const DUFFEL_API_KEY = 'duffel_test_v1LBqZORwP0k3jLVQG-B0HLzJ0SOMC1YtwEunCx9c0P';
+
+app.use(cors());
+app.use(express.json());
+
+app.post('/search-flights', async (req, res) => {
+  const { origin, destination, departure_date } = req.body;
+
+  try {
+    const response = await axios.post(
+      'https://api.duffel.com/air/offer_requests',
+      {
+        slices: [
+          {
+            origin,
+            destination,
+            departure_date
+          }
+        ],
+        passengers: [
+          {
+            type: 'adult'
+          }
+        ],
+        cabin_class: 'economy'
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${DUFFEL_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Duffel-Version': 'v1'
+        }
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+    res.status(500).json({ error: 'Flight search failed' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
