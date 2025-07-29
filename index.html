@@ -1,51 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EasyTrip</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f7f8fa;
       margin: 0;
-      background-color: #f4f6f8;
-      color: #333;
+      padding: 0;
     }
     header {
-      background-color: #007bff;
+      background: #007bff;
       color: white;
+      padding: 1rem;
       text-align: center;
-      padding: 1rem 0;
     }
     .container {
-      max-width: 500px;
+      max-width: 480px;
       margin: 2rem auto;
       background: white;
-      padding: 2rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     input, select, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
+      padding: 0.75rem;
+      margin-top: 1rem;
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1rem;
     }
     button {
-      background-color: #007bff;
+      background: #007bff;
       color: white;
-      font-weight: bold;
+      border: none;
       cursor: pointer;
-      border: none;
     }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 20px;
+    button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
@@ -54,16 +49,17 @@
     <h1>EasyTrip</h1>
     <p>Book Flights, Trains & Buses — Earn on Every Booking</p>
   </header>
+
   <div class="container">
     <form id="searchForm">
       <label for="from">From:</label>
-      <input type="text" id="from" name="from" placeholder="e.g. Bangalore" required>
+      <input type="text" id="from" placeholder="e.g. Bangalore" required />
       
       <label for="to">To:</label>
-      <input type="text" id="to" name="to" placeholder="e.g. Delhi" required>
+      <input type="text" id="to" placeholder="e.g. Delhi" required />
       
       <label for="type">Type:</label>
-      <select id="type" name="type">
+      <select id="type" required>
         <option value="flight">Flight</option>
         <option value="train">Train</option>
         <option value="bus">Bus</option>
@@ -71,24 +67,27 @@
       
       <button type="submit">Search Now</button>
     </form>
-
-    <iframe id="resultsFrame" src=""></iframe>
   </div>
 
   <script>
-    document.getElementById("searchForm").addEventListener("submit", function(e) {
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      const from = document.getElementById("from").value;
-      const to = document.getElementById("to").value;
-      const type = document.getElementById("type").value;
-      const iframe = document.getElementById("resultsFrame");
+      const from = document.getElementById('from').value.trim();
+      const to = document.getElementById('to').value.trim();
+      const type = document.getElementById('type').value;
 
-      if (type === "flight") {
-        iframe.src = `https://www.aviasales.com/search?marker=657867&origin_iata=${from}&destination_iata=${to}`;
-      } else if (type === "train") {
-        iframe.src = `https://www.irctc.co.in/`;
-      } else if (type === "bus") {
-        iframe.src = `https://www.redbus.in/`;
+      let url = '';
+
+      if (type === 'flight') {
+        url = `https://www.booking.com/flights/index.html?aid=YOUR_MARKER_ID&origin=${from}&destination=${to}`;
+      } else if (type === 'train') {
+        url = `https://www.goibibo.com/trains/?utm_source=affiliate&utm_medium=widget&utm_campaign=YOUR_MARKER_ID`;
+      } else if (type === 'bus') {
+        url = `https://www.redbus.in/?affcode=657867`;
+      }
+
+      if (url) {
+        window.open(url, '_blank');
       }
     });
   </script>
