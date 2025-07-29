@@ -1,102 +1,43 @@
+// index.html (Frontend)
+/*
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EasyTrip – Book Your Journey</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyTrip - Book Flights</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: #007bff;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 2rem auto;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 1rem 0;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
+    body { font-family: Arial; margin: 20px; }
+    input, button { padding: 8px; margin: 5px; }
   </style>
 </head>
 <body>
+  <h2>EasyTrip - Flight Booking</h2>
+  <input type="text" id="from" placeholder="From (e.g. BLR)">
+  <input type="text" id="to" placeholder="To (e.g. DEL)">
+  <input type="date" id="date">
+  <button onclick="searchFlights()">Search Flights</button>
 
-  <header>
-    <h1>EasyTrip</h1>
-    <p>Book Flights, Trains & Buses</p>
-  </header>
-
-  <div class="container">
-    <label for="from">From:</label>
-    <input type="text" id="from" placeholder="e.g. Delhi" required />
-
-    <label for="to">To:</label>
-    <input type="text" id="to" placeholder="e.g. Mumbai" required />
-
-    <label for="type">Select Travel Type:</label>
-    <select id="type">
-      <option value="flight">Flight</option>
-      <option value="train">Train</option>
-      <option value="bus">Bus</option>
-    </select>
-
-    <button onclick="bookNow()">Search & Book</button>
-  </div>
+  <div id="results"></div>
 
   <script>
-    function bookNow() {
-      const from = document.getElementById('from').value.trim().toLowerCase().replace(/\s+/g, '-');
-      const to = document.getElementById('to').value.trim().toLowerCase().replace(/\s+/g, '-');
-      const type = document.getElementById('type').value;
+    async function searchFlights() {
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const date = document.getElementById('date').value;
 
-      let url = '';
+      const res = await fetch('http://localhost:3000/search-flights', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ origin: from, destination: to, departure_date: date })
+      });
 
-      if (type === 'flight') {
-        // Replace with your actual affiliate URL
-        url = `https://www.aviasales.com/search/${from}${to}1?marker=657867`;
-      } else if (type === 'train') {
-        url = `https://www.confirmtkt.com/train-between-stations/${from}/${to}`;
-      } else if (type === 'bus') {
-        url = `https://www.redbus.in/bus-tickets/${from}-to-${to}`;
-      }
-
-      if (url) {
-        window.open(url, '_blank');
-      } else {
-        alert("Something went wrong. Please enter valid places.");
-      }
+      const data = await res.json();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = JSON.stringify(data, null, 2);
     }
   </script>
-
 </body>
 </html>
+*/
+    
